@@ -1,0 +1,38 @@
+# Ant
+- task: IBMIntegrationBusDeploy@1
+  inputs:
+    barPath: 'test.bar'
+    connType: 'address'
+    integrationNodeName: 'Test1'
+- task: IBMIntegrationBusCommand@1
+  inputs:
+    connType: 'address'
+    integrationNodeName: 'Test1'
+    ipAddress: 'localhost'
+    port: '4424'
+    cmd: 'mqsistartmsgflow'
+    args: '-e default'
+    ipAddress: 'localhost'
+    port: '4424'
+    integrationServerName: 'default'
+    completeDeployment: true
+# Build your Java projects and run tests with Apache Ant.
+# Add steps that save build artifacts and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Ant@1
+  inputs:
+    workingDirectory: ''
+    buildFile: 'build.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
